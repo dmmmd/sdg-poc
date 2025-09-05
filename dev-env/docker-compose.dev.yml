@@ -1,0 +1,53 @@
+services:
+  storage:
+    image: postgres:17
+    container_name: upright-storage-dev
+    restart: always
+    environment:
+      POSTGRES_USER: upright
+      POSTGRES_PASSWORD: upright
+      POSTGRES_DB: upright
+    ports:
+      - '25432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    container_name: upright-api-dev
+    build:
+      context: ../api
+      dockerfile: ../dev-env/api.Dockerfile.dev
+    command: npm run dev
+    volumes:
+      - ../api/src:/app/src
+      - ../api/package.json:/app/package.json
+      - ../api/tsconfig.json:/app/tsconfig.json
+    ports:
+      - '4001:4000'
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://upright:upright@storage:5432/upright
+    depends_on:
+      - storage
+
+  ui:
+    container_name: upright-ui-dev
+    build:
+      context: ../ui
+      dockerfile: ../ui/Dockerfile
+    command: npm run dev -- --host
+    volumes:
+      - ../ui/src:/app/src
+      - ../ui/public:/app/public
+      - ../ui/package.json:/app/package.json
+      - ../ui/tsconfig.json:/app/tsconfig.json
+      - ../ui/vite.config.ts:/app/vite.config.ts
+    ports:
+      - '3001:3000'
+    environment:
+      - VITE_API_URL=http://localhost:4001/graphql
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

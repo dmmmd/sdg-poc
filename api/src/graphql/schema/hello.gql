@@ -1,0 +1,4 @@
+extend type Query {
+    getHello2: String!
+    getCompanies: [String!]!
+}

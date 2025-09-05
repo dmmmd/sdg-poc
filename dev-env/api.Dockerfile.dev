@@ -1,0 +1,10 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+# The source code will be mounted as a volume in dev, so no COPY for src here
+
+CMD ["npm", "run", "dev"]
