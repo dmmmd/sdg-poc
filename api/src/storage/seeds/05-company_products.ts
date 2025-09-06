@@ -1,10 +1,9 @@
-import { Knex } from "knex";
 import {CompanyProductLinkModel} from "../../company/CompanyProductLinkModel";
 import {logError, logInfo} from "../../logger/loggerFacade";
 import {ProductModel, ID as P_ID} from "../../product/ProductModel";
 import {CompanyModel, ID as C_ID} from "../../company/CompanyModel";
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(): Promise<void> {
     const allProductIds = await ProductModel.query()
         .select([P_ID])
         .execute()

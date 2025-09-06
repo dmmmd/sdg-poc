@@ -1,4 +1,3 @@
-import {Knex} from "knex";
 import {logError, logInfo} from "../../logger/loggerFacade";
 import {readCsvFile} from "../../csv/readCsvFile";
 import {ProductModel} from "../../product/ProductModel";
@@ -16,7 +15,7 @@ type InsertCandidate = {
     path: string;
 };
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(): Promise<void> {
     const products: Map<string, ProductModel> = new Map();
     const orphans: Map<string, ProductCandidate[]> = new Map();
     const createInsertCandidate = (candidate: ProductCandidate): InsertCandidate | null => {
@@ -76,7 +75,4 @@ export async function seed(knex: Knex): Promise<void> {
         await transaction.rollback();
         throw error;
     }
-};
-
-
-
+}

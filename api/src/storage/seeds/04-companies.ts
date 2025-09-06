@@ -1,4 +1,3 @@
-import {Knex} from "knex";
 import {CompanyModel} from "../../company/CompanyModel";
 import {logError, logInfo} from "../../logger/loggerFacade";
 import {readCsvFile} from "../../csv/readCsvFile";
@@ -9,7 +8,7 @@ type CompanyCandidate = {
     sector: string;
 };
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(): Promise<void> {
     const filename = __dirname + '/companies.csv';
     let amount = 0;
 
@@ -33,7 +32,7 @@ export async function seed(knex: Knex): Promise<void> {
         await transaction.rollback();
         throw error;
     }
-};
+}
 
 
 

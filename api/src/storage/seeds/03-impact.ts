@@ -1,5 +1,3 @@
-import { Knex } from "knex";
-import {CompanyProductLinkModel} from "../../company/CompanyProductLinkModel";
 import {logError, logInfo} from "../../logger/loggerFacade";
 import {GoalModel, ID as G_ID} from "../../goal/GoalModel";
 import {ProductImpactModel} from "../../product/ProductImpactModel";
@@ -11,7 +9,7 @@ const getRandomImpact = (): ImpactLevel => {
     return validImpactLevels[randomIndex];
 }
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(): Promise<void> {
     const allGoalIds = await GoalModel.query()
         .select(G_ID)
         .execute()

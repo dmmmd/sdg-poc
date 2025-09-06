@@ -1,4 +1,3 @@
-import {Knex} from "knex";
 import {GoalModel} from "../../goal/GoalModel";
 import {logError, logInfo} from "../../logger/loggerFacade";
 import {readCsvFile} from "../../csv/readCsvFile";
@@ -8,7 +7,7 @@ type GoalCandidate = {
     description: string;
 };
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(): Promise<void> {
     const filename = __dirname + '/goals.csv';
     let amount = 0;
 
@@ -28,7 +27,7 @@ export async function seed(knex: Knex): Promise<void> {
         await transaction.rollback();
         throw error;
     }
-};
+}
 
 
 
