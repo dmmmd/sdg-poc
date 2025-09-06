@@ -22,7 +22,7 @@ export async function seed(): Promise<void> {
         .then(rows => rows.map(r => r.id));
 
     const getRandomProductIds = (): string[] => {
-        const amount = Math.floor(Math.random() * 10) + 1;
+        const amount = Math.floor(Math.random() * 15) + 1;
         const selected = new Set<string>();
         while (selected.size < amount) {
             const randomIndex = Math.floor(Math.random() * allProductIds.length);
