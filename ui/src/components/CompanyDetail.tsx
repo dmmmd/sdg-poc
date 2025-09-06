@@ -48,11 +48,16 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId, onViewGoalCont
     );
   }
 
-  const { name, sector, goalImpacts } = data.getCompany;
+  const { name, sector, products, goalImpacts } = data.getCompany;
 
-  // Separate positive and negative impacts
-  const positiveImpacts = goalImpacts.filter(impact => impact.impact > 0);
-  const negativeImpacts = goalImpacts.filter(impact => impact.impact < 0);
+  // Separate positive and negative impacts, sorted by impact value
+  const positiveImpacts = goalImpacts
+    .filter(impact => impact.impact > 0)
+    .sort((a, b) => parseInt(b.impact.toString()) - parseInt(a.impact.toString())); // Sort descending (highest first)
+  
+  const negativeImpacts = goalImpacts
+    .filter(impact => impact.impact < 0)
+    .sort((a, b) => parseInt(a.impact.toString()) - parseInt(b.impact.toString())); // Sort ascending (most negative first)
 
   const formatImpact = (impact: any) => {
     const value = parseInt(impact.toString());
@@ -106,6 +111,19 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId, onViewGoalCont
     <div className="company-detail">
       <h2>{name}</h2>
       <div className="sector">Sector: {sector}</div>
+      
+      {products && products.length > 0 && (
+        <div className="company-products">
+          <h3>Products & Services</h3>
+          <div className="products-list">
+            {products.map((product) => (
+              <span key={product.id} className="product-tag">
+                {product.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
       
       <div className="goal-impacts">
         <h3>Goal Contributions</h3>

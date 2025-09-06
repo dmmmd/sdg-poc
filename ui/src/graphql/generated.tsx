@@ -31,6 +31,7 @@ export type Company = {
   goalImpacts: Array<CompanyGoalImpact>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  products: Array<Product>;
   sector: Scalars['String']['output'];
 };
 
@@ -141,7 +142,7 @@ export type CompanyDetailQueryVariables = Exact<{
 }>;
 
 
-export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', id: string, name: string, description: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
+export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, products: Array<{ __typename?: 'Product', id: string, name: string }>, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', id: string, name: string, description: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
 
 export type CompanyListQueryVariables = Exact<{
   page: Scalars['Int']['input'];
@@ -172,6 +173,10 @@ export const CompanyDetailDocument = gql`
     id
     name
     sector
+    products {
+      id
+      name
+    }
     goalImpacts {
       goal {
         id

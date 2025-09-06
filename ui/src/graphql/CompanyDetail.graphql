@@ -3,6 +3,10 @@ query CompanyDetail($id: ID!) {
     id
     name
     sector
+    products {
+      id
+      name
+    }
     goalImpacts {
       goal {
         id
