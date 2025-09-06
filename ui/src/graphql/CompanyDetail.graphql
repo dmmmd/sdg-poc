@@ -1,0 +1,13 @@
+query CompanyDetail($id: ID!) {
+  getCompany(id: $id) {
+    id
+    name
+    sector
+    goalImpacts {
+      goal {
+        name
+      }
+      impact
+    }
+  }
+}

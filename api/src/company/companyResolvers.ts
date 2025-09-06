@@ -22,6 +22,11 @@ export const companyResolvers = {
             return loadCompanyIdsByPage(page);
         },
 
+        getCompany: async (_, {id}: {id: string}): Promise<string | null> => {
+            const company = await loadCompany(id);
+            return company?.id;
+        },
+
         findCompanies: (_, {partialName}: {partialName: string}): Promise<string[]> => {
             // @todo move the validation
             if (partialName.trim().length < 3 || partialName.includes('%') || partialName.includes('_')) {

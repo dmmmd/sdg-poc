@@ -1,0 +1,7 @@
+query CompanyList($page: Int!) {
+  listCompanies(page: $page) {
+    id
+    name
+    sector
+  }
+}
