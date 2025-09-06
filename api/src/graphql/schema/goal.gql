@@ -2,4 +2,22 @@ type Goal {
     id: ID!
     name: String!
     description: String!
+    contributorCompanies(direction: ImpactDirection!): [CompanyGoalImpactContributor!]!
+}
+
+interface GoalImpactContributor {
+    goal: Goal!
+    impact: BigInt!
+}
+
+type CompanyGoalImpactContributor implements GoalImpactContributor {
+    goal: Goal!
+    impact: BigInt!
+    company: Company!
+    factors: [ProductImpactFactor!]!
+}
+
+extend type Query {
+    listGoals: [Goal!]!
+    getGoal(id: ID!): Goal
 }

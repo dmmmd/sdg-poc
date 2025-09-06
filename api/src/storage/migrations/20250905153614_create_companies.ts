@@ -9,8 +9,8 @@ export async function up(knex: Knex): Promise<void> {
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             name VARCHAR(512) NOT NULL, -- For the PoC, we won't bother with uniqueness
             "searchableName" VARCHAR(512) GENERATED ALWAYS AS (lower(name)) STORED,
-            sector TEXT,
-            "revenueEURThousands" INTEGER,
+            sector TEXT NOT NULL DEFAULT '',
+            "revenueEURThousands" INTEGER NOT NULL DEFAULT 0,
             "createdAt"  TIMESTAMP NOT NULL DEFAULT now()
         );
 

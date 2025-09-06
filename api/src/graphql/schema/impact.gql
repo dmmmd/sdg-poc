@@ -4,3 +4,8 @@ enum ImpactLevel {
     NEGATIVE,
     STRONG_NEGATIVE,
 }
+
+enum ImpactDirection {
+    POSITIVE,
+    NEGATIVE,
+}

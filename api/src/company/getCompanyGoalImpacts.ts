@@ -4,7 +4,7 @@ import {loadProductImpacts} from "../product/productImpactLoaders";
 import {loadCompany} from "./companyLoaders";
 import {createCalculatedProductImpactFactor} from "../product/ProductImpactFactor";
 
-export const getCompanyGoalImpacts = async (companyId: string): Promise<CompanyGoalImpact[]> => {
+export const getCompanyGoalImpacts = async (companyId: string, goalId: string|undefined = undefined): Promise<CompanyGoalImpact[]> => {
     const goalImpacts: Map<string, CalculatedCompanyGoalImpact> = new Map();
 
     const [company, productLinks] = await Promise.all([
@@ -13,7 +13,7 @@ export const getCompanyGoalImpacts = async (companyId: string): Promise<CompanyG
     ]);
 
     await Promise.all(productLinks.map(async link => {
-        const impacts = await loadProductImpacts(link.productId);
+        const impacts = await loadProductImpacts(link.productId, goalId);
         const productRevenueAmount = company.revenueEURThousands * link.revenueShare;
         impacts.forEach(impact => {
             const goalId = impact.goalId;

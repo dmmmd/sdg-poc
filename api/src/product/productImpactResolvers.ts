@@ -31,7 +31,7 @@ export const productImpactResolvers = {
             }
 
             throw new Error(`Unsupported ProductImpact type: ${impact}`);
-        }
+        },
     },
 
     DirectProductImpact: {

@@ -7,7 +7,10 @@ type loaderOptions = {
 };
 
 export const createLoader = function <K, T>(fn: (keys: readonly K[]) => Promise<(T[])>, options?: loaderOptions): DataLoader<K, T> {
-    let opts = {};
+    let opts: object = {
+        cacheKeyFn: key => (typeof key === 'object' ? JSON.stringify(key) : String(key)),
+    };
+
     const cacheSize = options?.cacheSize;
     if (cacheSize !== undefined) {
         opts = {

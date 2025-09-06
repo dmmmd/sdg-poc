@@ -13,7 +13,7 @@ export class CompanyModel extends AbstractModel {
     readonly name!: string;
     readonly searchableName!: string;
     readonly sector!: string;
-    readonly revenueEURThousands?: number;
+    readonly revenueEURThousands!: number;
     readonly createdAt!: Date;
 
     static get tableName() {
@@ -27,7 +27,7 @@ export class CompanyModel extends AbstractModel {
             properties: {
                 [ID]: { type: 'string', format: 'uuid' },
                 [NAME]: { type: 'string', minLength: 1, maxLength: 255 },
-                [SECTOR]: { type: 'string', minLength: 1, maxLength: 255 },
+                [SECTOR]: { type: 'string', maxLength: 255 },
                 [REVENUE_EUR_THOUSANDS]: { type: 'integer', minimum: 0 },
             },
         };
