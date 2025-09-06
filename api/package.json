@@ -9,14 +9,17 @@
   "dependencies": {
     "@apollo/server": "^5.0.0",
     "@graphql-tools/utils": "^10.9.1",
+    "dataloader": "^2.2.3",
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "knex": "^3.1.0",
+    "lru_map": "^0.4.1",
     "objection": "^3.1.5",
     "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/node": "^24.3.1",
+    "csv-parser": "^3.2.0",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.5",
