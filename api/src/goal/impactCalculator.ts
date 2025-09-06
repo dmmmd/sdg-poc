@@ -1,17 +1,17 @@
-import {ImpactLevel} from "./impactLevels";
+import {AlignmentLevel} from "./alignmentLevels";
 import {logError} from "../logger/loggerFacade";
-import {ProductImpactFactor} from "../product/ProductImpactFactor";
+import {ProductImpact} from "../product/ProductImpact";
 
 export const IMPACT_POSITIVE_IMBALANCE = 0.9; // It is harder to make a positive impact than a negative one
 export const ORDER_OF_MAGNITUDE = 10;
 export const STRONG_ORDER_OF_MAGNITUDE = ORDER_OF_MAGNITUDE * 10;
 
 class ImpactCalculator {
-    private leveledImpacts: Map<ImpactLevel, number> = new Map();
+    private leveledImpacts: Map<AlignmentLevel, number> = new Map();
 
-    public addImpactFactor(factor: ProductImpactFactor): void {
-        const level = factor.impact.impactLevel;
-        const amount = factor.factor;
+    public addImpactFactor(factor: ProductImpact): void {
+        const level = factor.alignment.alignment;
+        const amount = factor.impact;
 
         const total = this.leveledImpacts.get(level) || 0;
         this.leveledImpacts.set(level, total + amount);
@@ -22,16 +22,16 @@ class ImpactCalculator {
 
         for (const [level, amount] of this.leveledImpacts.entries()) {
             switch (level) {
-                case ImpactLevel.STRONG_POSITIVE:
+                case AlignmentLevel.STRONG_POSITIVE:
                     total += amount * STRONG_ORDER_OF_MAGNITUDE * IMPACT_POSITIVE_IMBALANCE;
                     break;
-                case ImpactLevel.POSITIVE:
+                case AlignmentLevel.POSITIVE:
                     total += amount * ORDER_OF_MAGNITUDE * IMPACT_POSITIVE_IMBALANCE;
                     break;
-                case ImpactLevel.NEGATIVE:
+                case AlignmentLevel.NEGATIVE:
                     total -= amount * ORDER_OF_MAGNITUDE;
                     break;
-                case ImpactLevel.STRONG_NEGATIVE:
+                case AlignmentLevel.STRONG_NEGATIVE:
                     total -= amount * STRONG_ORDER_OF_MAGNITUDE;
                     break;
                 default:

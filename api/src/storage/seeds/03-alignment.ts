@@ -1,19 +1,16 @@
 import {logError, logInfo} from "../../logger/loggerFacade";
-import {GoalModel, ID as G_ID} from "../../goal/GoalModel";
-import {ProductImpactModel} from "../../product/ProductImpactModel";
+import {ProductAlignmentModel} from "../../product/ProductAlignmentModel";
 import {ProductModel, ID as P_ID} from "../../product/ProductModel";
-import {ImpactLevel, validImpactLevels} from "../../goal/impactLevels";
+import {AlignmentLevel, validAlignmentLevels} from "../../goal/alignmentLevels";
+import {loadGoalIds} from "../../goal/goalLoaders";
 
-const getRandomImpact = (): ImpactLevel => {
-    const randomIndex = Math.floor(Math.random() * validImpactLevels.length);
-    return validImpactLevels[randomIndex];
+const getRandomAlignment = (): AlignmentLevel => {
+    const randomIndex = Math.floor(Math.random() * validAlignmentLevels.length);
+    return validAlignmentLevels[randomIndex];
 }
 
 export async function seed(): Promise<void> {
-    const allGoalIds = await GoalModel.query()
-        .select(G_ID)
-        .execute()
-        .then(rows => rows.map(r => r.id));
+    const allGoalIds = await loadGoalIds();
 
     const getRandomGoalIds = (): string[] => {
         const amount = Math.floor(Math.random() * 3) + 1;
@@ -25,10 +22,10 @@ export async function seed(): Promise<void> {
         return [...selected.values()];
     };
 
-    let productAmount = 0, impactAmount = 0;
-    const transaction = await ProductImpactModel.startTransaction();
+    let productAmount = 0, alignmentAmount = 0;
+    const transaction = await ProductAlignmentModel.startTransaction();
     try {
-        await ProductImpactModel.query(transaction).truncate();
+        await ProductAlignmentModel.query(transaction).truncate();
 
         const pageSize = 100;
         let page = 0, productIds = [];
@@ -43,19 +40,19 @@ export async function seed(): Promise<void> {
             for (const productId of productIds) {
                 const goalIds = getRandomGoalIds();
                 if (goalIds.length > 0) {
-                    await ProductImpactModel.query(transaction)
+                    await ProductAlignmentModel.query(transaction)
                         .insert(goalIds.map(goalId => {
                             return {
                                 productId,
                                 goalId,
-                                impact: getRandomImpact(),
+                                alignment: getRandomAlignment(),
                             }
                         }))
                         // Conflicts are not possible due to prior truncation
                         .execute();
 
                     productAmount++;
-                    impactAmount += goalIds.length;
+                    alignmentAmount += goalIds.length;
                 }
             }
 
@@ -63,7 +60,7 @@ export async function seed(): Promise<void> {
         } while (productIds.length >= pageSize);
 
         await transaction.commit();
-        logInfo(`Created ${impactAmount} impact records for ${productAmount} products`);
+        logInfo(`Created ${alignmentAmount} alignment records for ${productAmount} products`);
     } catch (error) {
         logError(error);
         await transaction.rollback();

@@ -1,20 +1,19 @@
 import {AbstractModel, bindModelToDatabase} from "../model/AbstractModel";
 import {STORAGE_PRODUCTS} from "../storage/storageFeatures";
-import {ImpactLevel, validImpactLevels} from "../goal/impactLevels";
+import {AlignmentLevel, validAlignmentLevels} from "../goal/alignmentLevels";
 
 export const PRODUCT_ID = "productId";
 export const GOAL_ID = "goalId";
-export const IMPACT = "impact";
-export const CREATED_AT = "createdAt";
+export const ALIGNMENT = "alignment";
 
-export class ProductImpactModel extends AbstractModel {
+export class ProductAlignmentModel extends AbstractModel {
     readonly productId!: string;
     readonly goalId!: string;
-    readonly impact!: ImpactLevel;
+    readonly alignment!: AlignmentLevel;
     readonly createdAt!: string;
 
     static get tableName(): string {
-        return "product_impact_records";
+        return "product_alignment_records";
     }
 
     static get idColumn(): string[] {
@@ -28,14 +27,14 @@ export class ProductImpactModel extends AbstractModel {
     static get jsonSchema() {
         return {
             type: "object",
-            required: [PRODUCT_ID, GOAL_ID, IMPACT],
+            required: [PRODUCT_ID, GOAL_ID, ALIGNMENT],
             properties: {
                 [PRODUCT_ID]: {type: "string", format: "uuid"},
                 [GOAL_ID]: {type: "string", format: "uuid"},
-                [IMPACT]: {type: "string", enum: validImpactLevels},
+                [ALIGNMENT]: {type: "string", enum: validAlignmentLevels},
             },
         };
     }
 }
 
-bindModelToDatabase(ProductImpactModel, STORAGE_PRODUCTS);
+bindModelToDatabase(ProductAlignmentModel, STORAGE_PRODUCTS);

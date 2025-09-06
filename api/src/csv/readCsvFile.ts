@@ -7,9 +7,7 @@ export const readCsvFile = async <T>(filename: string, visitor: csvVisitor<T>): 
     const stream = fs.createReadStream(filename)
         .pipe(csv());
 
-    let amount = 0;
     for await (const row of stream) {
-        amount++;
         await visitor(row as T);
     }
 }

@@ -26,7 +26,7 @@ services:
       - '4001:4000'
     environment:
       NODE_ENV: development
-      DEBUG: knex:*
+#      DEBUG: knex:*
       DATABASE_URL: postgres://upright:upright@storage:5432/upright
     depends_on:
       - storage
@@ -35,7 +35,7 @@ services:
     container_name: upright-ui-dev
     build:
       context: ../ui
-      dockerfile: ../ui/Dockerfile
+      dockerfile: ../dev-env/ui.Dockerfile.dev
     command: npm run dev -- --host
     volumes:
       - ../ui/src:/app/src

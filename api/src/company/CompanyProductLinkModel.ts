@@ -1,13 +1,11 @@
 import {AbstractModel, bindModelToDatabase} from "../model/AbstractModel";
 import {STORAGE_PRODUCTS} from "../storage/storageFeatures";
-import {CompanyProductLink} from "./CompanyProductLink";
 
 export const COMPANY_ID = "companyId";
 export const PRODUCT_ID = "productId";
 export const REVENUE_SHARE = "revenueShare";
-export const CREATED_AT = "createdAt";
 
-export class CompanyProductLinkModel extends AbstractModel implements CompanyProductLink {
+export class CompanyProductLinkModel extends AbstractModel {
     readonly companyId!: string;
     readonly productId!: string;
     readonly revenueShare!: number;

@@ -1,4 +1,4 @@
-.PHONY: up down clean up down clean migrate generate-migration seed generate-seed
+.PHONY: build up down clean up down clean migrate generate-migration seed generate-seed
 
 up:
 	docker compose -f dev-env/docker-compose.dev.yml build --no-cache

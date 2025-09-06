@@ -6,15 +6,14 @@ export const PARENT_ID = "parentId";
 export const NAME = "name";
 export const SLUG = "slug";
 export const PATH = "path";
-export const CREATED_AT = "createdAt";
 
 export class ProductModel extends AbstractModel {
     readonly id!: string;
     readonly parentId!: string;
-    name!: string;
-    slug!: string;
-    path!: string;
-    createdAt!: string;
+    readonly name!: string;
+    readonly slug!: string;
+    readonly path!: string;
+    readonly createdAt!: string;
 
     static get tableName(): string {
         return "products";
@@ -23,7 +22,7 @@ export class ProductModel extends AbstractModel {
     static get jsonSchema() {
         return {
             type: "object",
-            required: [NAME, PATH],
+            required: [NAME, SLUG, PATH],
             properties: {
                 [ID]: {type: "string", format: "uuid"},
                 [PARENT_ID]: {

@@ -1,23 +1,4 @@
-interface ProductImpact {
-    goal: Goal!
-    product: Product!
-    impactLevel: ImpactLevel!
-}
-
-type DirectProductImpact implements ProductImpact {
-    goal: Goal!
-    product: Product!
-    impactLevel: ImpactLevel!
-}
-
-type ViaProductImpact implements ProductImpact {
-    goal: Goal!
-    product: Product!
-    viaProduct: Product!
-    impactLevel: ImpactLevel!
-}
-
-type ProductImpactFactor {
-    impact: ProductImpact!
-    factor: Int!
+type ProductImpact {
+    alignment: ProductAlignment!
+    impact: BigInt!
 }

@@ -1,6 +1,6 @@
 import {createLoader} from "../loader/loaderFactory";
-import {createDirectProductImpact, createViaProductImpact, ProductImpact} from "./ProductImpact";
-import {InheritedProductImpactModel, PRODUCT_ID, GOAL_ID, IMPACT, VIA_PRODUCT_ID} from "./InheritedProductImpactModel";
+import {createDirectProductAlignment, createViaProductAlignment, ProductAlignment} from "./ProductAlignment";
+import {InheritedProductAlignmentModel, PRODUCT_ID, GOAL_ID, ALIGNMENT, VIA_PRODUCT_ID} from "./InheritedProductAlignmentModel";
 
 const productImpactsLoader = createLoader(async (productGoalTuples: [string, string|undefined][]) => {
     const productIds: string[] = [], tuples: [string, string][] = [];
@@ -10,8 +10,8 @@ const productImpactsLoader = createLoader(async (productGoalTuples: [string, str
             : productIds.push(productId);
     }
 
-    const queryBuilder = InheritedProductImpactModel.query()
-        .select(PRODUCT_ID, GOAL_ID, IMPACT, VIA_PRODUCT_ID)
+    const queryBuilder = InheritedProductAlignmentModel.query()
+        .select(PRODUCT_ID, GOAL_ID, ALIGNMENT, VIA_PRODUCT_ID)
         .where(true);
 
     if (tuples.length) {
@@ -24,8 +24,8 @@ const productImpactsLoader = createLoader(async (productGoalTuples: [string, str
     const rows = await queryBuilder.execute();
     const impacts = rows.map(row => {
         return row.viaProductId
-            ? createViaProductImpact(row.goalId, row.productId, row.viaProductId, row.impact)
-            : createDirectProductImpact(row.goalId, row.productId, row.impact);
+            ? createViaProductAlignment(row.goalId, row.productId, row.viaProductId, row.alignment)
+            : createDirectProductAlignment(row.goalId, row.productId, row.alignment);
     });
 
     return productGoalTuples.map(([productId, goalId]) => {
@@ -38,6 +38,6 @@ const productImpactsLoader = createLoader(async (productGoalTuples: [string, str
     cacheSize: 1000,
 });
 
-export const loadProductImpacts = (productId: string, goalId: string|undefined = undefined): Promise<ProductImpact[]> => {
+export const loadProductImpacts = (productId: string, goalId: string|undefined = undefined): Promise<ProductAlignment[]> => {
     return productImpactsLoader.load([productId, goalId]);
 };

@@ -2,5 +2,5 @@ type CompanyGoalImpact {
     company: Company!
     goal: Goal!
     impact: BigInt!
-    factors: [ProductImpactFactor!]!
+    factors: [ProductImpact!]!
 }

@@ -1,0 +1,18 @@
+interface ProductAlignment {
+    goal: Goal!
+    product: Product!
+    alignment: AlignmentLevel!
+}
+
+type DirectProductAlignment implements ProductAlignment {
+    goal: Goal!
+    product: Product!
+    alignment: AlignmentLevel!
+}
+
+type ViaProductAlignment implements ProductAlignment {
+    goal: Goal!
+    product: Product!
+    viaProduct: Product!
+    alignment: AlignmentLevel!
+}

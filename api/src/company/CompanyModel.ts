@@ -6,7 +6,6 @@ export const NAME = 'name';
 export const SEARCHABLE_NAME = 'searchableName';
 export const SECTOR = 'sector';
 export const REVENUE_EUR_THOUSANDS = 'revenueEURThousands';
-export const CREATED_AT = 'createdAt';
 
 export class CompanyModel extends AbstractModel {
     readonly id!: string;

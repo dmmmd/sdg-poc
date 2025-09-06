@@ -1,0 +1,6 @@
+enum AlignmentLevel {
+    STRONG_POSITIVE,
+    POSITIVE,
+    NEGATIVE,
+    STRONG_NEGATIVE,
+}

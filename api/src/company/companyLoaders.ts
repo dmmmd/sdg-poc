@@ -41,9 +41,9 @@ export const loadCompany = (id: string): Promise<CompanyModel | undefined> => {
     return companyModelLoader.load(id);
 };
 
-const companyFinderLoader = createLoader(async (partialNames: string[]) => {
+const companyFinderLoader = createLoader(async (partialNames: string[]): Promise<string[][]> => {
     const termAlias = 'term';
-    const selects = partialNames.map(term =>
+    const selectors = partialNames.map(term =>
         CompanyModel.query()
             .select(
                 CompanyModel.raw('? as ??', [term, termAlias]),
@@ -55,7 +55,7 @@ const companyFinderLoader = createLoader(async (partialNames: string[]) => {
             .toKnexQuery()
     );
 
-    const rows = await CompanyModel.knex().unionAll(selects, true);
+    const rows = await CompanyModel.knex().unionAll(selectors, true);
 
     const buckets = new Map(partialNames.map(term => [term, []]));
     for (const row of rows) {
@@ -69,8 +69,7 @@ const companyFinderLoader = createLoader(async (partialNames: string[]) => {
 
 export const findCompany = (partialName: string): Promise<string[]> => {
     if (partialName.length < 3) {
-        // @todo proper client error or validation by spec
-        return Promise.resolve([]);
+        throw new Error(`Search term must be at least 3 characters long`);
     }
     return companyFinderLoader.load(partialName.toLowerCase());
 };

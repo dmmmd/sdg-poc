@@ -2,7 +2,7 @@ import {CalculatedCompanyGoalImpact, CompanyGoalImpact, createCalculatedCompanyG
 import {loadCompanyProductLinks} from "./companyProductLinkLoaders";
 import {loadProductImpacts} from "../product/productImpactLoaders";
 import {loadCompany} from "./companyLoaders";
-import {createCalculatedProductImpactFactor} from "../product/ProductImpactFactor";
+import {createCalculatedProductImpact} from "../product/ProductImpact";
 
 export const getCompanyGoalImpacts = async (companyId: string, goalId: string|undefined = undefined): Promise<CompanyGoalImpact[]> => {
     const goalImpacts: Map<string, CalculatedCompanyGoalImpact> = new Map();
@@ -21,7 +21,7 @@ export const getCompanyGoalImpacts = async (companyId: string, goalId: string|un
                 goalImpacts.set(impact.goalId, createCalculatedCompanyGoalImpact(companyId, impact.goalId));
             }
 
-            const factor = createCalculatedProductImpactFactor(impact, productRevenueAmount);
+            const factor = createCalculatedProductImpact(impact, productRevenueAmount);
             goalImpacts.get(goalId).addImpactFactor(factor);
         });
     }));

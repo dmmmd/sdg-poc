@@ -1,5 +1,6 @@
 scalar BigInt
+scalar Date
 
 type Query {
-    getHello: String!
+    getTime: Date! # Won't implement it in this PoC, but it's here to let me extend the Query type in peace
 }

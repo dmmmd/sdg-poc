@@ -3,6 +3,7 @@ import {CompanyGoalImpactContributor} from "../company/CompanyGoalImpactContribu
 
 export const goalImpactContributorPropertyResolvers = {
     goal: (contributor: GoalImpactContributor): string => contributor.goalId,
+
     impact: (contributor: GoalImpactContributor): number => Math.round(contributor.impact),
 }
 
