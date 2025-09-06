@@ -2,6 +2,7 @@ type Company {
     id: ID!
     name: String!
     sector: String!
+    products: [Product!]!
     goalImpacts: [CompanyGoalImpact!]!
 }
 

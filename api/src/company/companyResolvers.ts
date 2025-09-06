@@ -5,6 +5,7 @@ import {CompanyGoalImpact} from "./CompanyGoalImpact";
 import {getCompanyGoalImpacts} from "./getCompanyGoalImpacts";
 import {ApolloServerValidationErrorCode} from "@apollo/server/errors";
 import {GraphQLError} from "graphql/error";
+import {loadCompanyProductIds} from "./companyProductLinkLoaders";
 
 export const companyResolvers = {
     Company: {
@@ -13,6 +14,8 @@ export const companyResolvers = {
         name: (id: string): Promise<string> => loadModelProperty<CompanyModel, string>(id, NAME, loadCompany),
 
         sector: (id: string): Promise<string> => loadModelProperty<CompanyModel, string>(id, SECTOR, loadCompany),
+
+        products: (companyId: string): Promise<string[]> => loadCompanyProductIds(companyId),
 
         goalImpacts: (companyId: string): Promise<CompanyGoalImpact[]> => getCompanyGoalImpacts(companyId),
     },

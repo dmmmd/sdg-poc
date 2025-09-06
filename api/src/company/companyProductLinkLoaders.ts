@@ -19,3 +19,8 @@ const companyProductLinksLoader = createLoader(async (companyIds: string[]): Pro
 export const loadCompanyProductLinks = (companyId: string): Promise<CompanyProductLink[]> => {
     return companyProductLinksLoader.load(companyId);
 };
+
+export const loadCompanyProductIds = async (companyId: string): Promise<string[]> => {
+    const links = await loadCompanyProductLinks(companyId);
+    return links.map(link => link.productId);
+};
