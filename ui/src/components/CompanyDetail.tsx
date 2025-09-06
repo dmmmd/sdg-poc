@@ -3,9 +3,10 @@ import { useCompanyDetailQuery } from '../graphql/generated';
 
 interface CompanyDetailProps {
   companyId: string;
+  onViewGoalContributors: (goalId: string) => void;
 }
 
-const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId }) => {
+const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId, onViewGoalContributors }) => {
   const [openDrawers, setOpenDrawers] = useState<Set<string>>(new Set());
   const { data, loading, error } = useCompanyDetailQuery({
     variables: { id: companyId },
@@ -121,7 +122,19 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId }) => {
                     className="goal-card-header"
                     onClick={() => toggleDrawer(impact.goal.name)}
                   >
-                    <div className="goal-name">{impact.goal.name}</div>
+                    <div className="goal-header-row">
+                      <div className="goal-name">{impact.goal.name}</div>
+                      <button 
+                        className="top-contributors-button-small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log('Goal ID:', impact.goal.id);
+                          onViewGoalContributors(impact.goal.id);
+                        }}
+                      >
+                        Top Contributors
+                      </button>
+                    </div>
                     <div className="goal-description">{impact.goal.description}</div>
                     <div className="progress-bar-container">
                       <div 
@@ -156,7 +169,19 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId }) => {
                     className="goal-card-header"
                     onClick={() => toggleDrawer(impact.goal.name)}
                   >
-                    <div className="goal-name">{impact.goal.name}</div>
+                    <div className="goal-header-row">
+                      <div className="goal-name">{impact.goal.name}</div>
+                      <button 
+                        className="top-contributors-button-small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log('Goal ID:', impact.goal.id);
+                          onViewGoalContributors(impact.goal.id);
+                        }}
+                      >
+                        Top Contributors
+                      </button>
+                    </div>
                     <div className="goal-description">{impact.goal.description}</div>
                     <div className="progress-bar-container">
                       <div 

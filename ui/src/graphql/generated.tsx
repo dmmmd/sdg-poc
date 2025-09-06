@@ -141,7 +141,7 @@ export type CompanyDetailQueryVariables = Exact<{
 }>;
 
 
-export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', name: string, description: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
+export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', id: string, name: string, description: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
 
 export type CompanyListQueryVariables = Exact<{
   page: Scalars['Int']['input'];
@@ -157,6 +157,14 @@ export type FindCompaniesQueryVariables = Exact<{
 
 export type FindCompaniesQuery = { __typename?: 'Query', findCompanies: Array<{ __typename?: 'Company', id: string, name: string, sector: string }> };
 
+export type GoalContributorsQueryVariables = Exact<{
+  goalId: Scalars['ID']['input'];
+  direction: ImpactDirection;
+}>;
+
+
+export type GoalContributorsQuery = { __typename?: 'Query', getGoal?: { __typename?: 'Goal', id: string, name: string, description: string, contributorCompanies: Array<{ __typename?: 'CompanyGoalImpactContributor', impact: any, company: { __typename?: 'Company', id: string, name: string, sector: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
+
 
 export const CompanyDetailDocument = gql`
     query CompanyDetail($id: ID!) {
@@ -166,6 +174,7 @@ export const CompanyDetailDocument = gql`
     sector
     goalImpacts {
       goal {
+        id
         name
         description
       }
@@ -311,3 +320,74 @@ export type FindCompaniesQueryHookResult = ReturnType<typeof useFindCompaniesQue
 export type FindCompaniesLazyQueryHookResult = ReturnType<typeof useFindCompaniesLazyQuery>;
 export type FindCompaniesSuspenseQueryHookResult = ReturnType<typeof useFindCompaniesSuspenseQuery>;
 export type FindCompaniesQueryResult = Apollo.QueryResult<FindCompaniesQuery, FindCompaniesQueryVariables>;
+export const GoalContributorsDocument = gql`
+    query GoalContributors($goalId: ID!, $direction: ImpactDirection!) {
+  getGoal(id: $goalId) {
+    id
+    name
+    description
+    contributorCompanies(direction: $direction) {
+      company {
+        id
+        name
+        sector
+      }
+      impact
+      factors {
+        impact
+        alignment {
+          ... on DirectProductAlignment {
+            product {
+              name
+            }
+            alignment
+          }
+          ... on ViaProductAlignment {
+            product {
+              name
+            }
+            viaProduct {
+              name
+            }
+            alignment
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGoalContributorsQuery__
+ *
+ * To run a query within a React component, call `useGoalContributorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGoalContributorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGoalContributorsQuery({
+ *   variables: {
+ *      goalId: // value for 'goalId'
+ *      direction: // value for 'direction'
+ *   },
+ * });
+ */
+export function useGoalContributorsQuery(baseOptions: Apollo.QueryHookOptions<GoalContributorsQuery, GoalContributorsQueryVariables> & ({ variables: GoalContributorsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GoalContributorsQuery, GoalContributorsQueryVariables>(GoalContributorsDocument, options);
+      }
+export function useGoalContributorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GoalContributorsQuery, GoalContributorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GoalContributorsQuery, GoalContributorsQueryVariables>(GoalContributorsDocument, options);
+        }
+export function useGoalContributorsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GoalContributorsQuery, GoalContributorsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GoalContributorsQuery, GoalContributorsQueryVariables>(GoalContributorsDocument, options);
+        }
+export type GoalContributorsQueryHookResult = ReturnType<typeof useGoalContributorsQuery>;
+export type GoalContributorsLazyQueryHookResult = ReturnType<typeof useGoalContributorsLazyQuery>;
+export type GoalContributorsSuspenseQueryHookResult = ReturnType<typeof useGoalContributorsSuspenseQuery>;
+export type GoalContributorsQueryResult = Apollo.QueryResult<GoalContributorsQuery, GoalContributorsQueryVariables>;

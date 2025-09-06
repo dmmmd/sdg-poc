@@ -1,13 +1,13 @@
-query CompanyDetail($id: ID!) {
-  getCompany(id: $id) {
+query GoalContributors($goalId: ID!, $direction: ImpactDirection!) {
+  getGoal(id: $goalId) {
     id
     name
-    sector
-    goalImpacts {
-      goal {
+    description
+    contributorCompanies(direction: $direction) {
+      company {
         id
         name
-        description
+        sector
       }
       impact
       factors {
