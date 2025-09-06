@@ -6,8 +6,29 @@ query CompanyDetail($id: ID!) {
     goalImpacts {
       goal {
         name
+        description
       }
       impact
+      factors {
+        impact
+        alignment {
+          ... on DirectProductAlignment {
+            product {
+              name
+            }
+            alignment
+          }
+          ... on ViaProductAlignment {
+            product {
+              name
+            }
+            viaProduct {
+              name
+            }
+            alignment
+          }
+        }
+      }
     }
   }
 }

@@ -141,7 +141,7 @@ export type CompanyDetailQueryVariables = Exact<{
 }>;
 
 
-export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', name: string } }> } | null };
+export type CompanyDetailQuery = { __typename?: 'Query', getCompany?: { __typename?: 'Company', id: string, name: string, sector: string, goalImpacts: Array<{ __typename?: 'CompanyGoalImpact', impact: any, goal: { __typename?: 'Goal', name: string, description: string }, factors: Array<{ __typename?: 'ProductImpact', impact: any, alignment: { __typename?: 'DirectProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string } } | { __typename?: 'ViaProductAlignment', alignment: AlignmentLevel, product: { __typename?: 'Product', name: string }, viaProduct: { __typename?: 'Product', name: string } } }> }> } | null };
 
 export type CompanyListQueryVariables = Exact<{
   page: Scalars['Int']['input'];
@@ -160,8 +160,29 @@ export const CompanyDetailDocument = gql`
     goalImpacts {
       goal {
         name
+        description
       }
       impact
+      factors {
+        impact
+        alignment {
+          ... on DirectProductAlignment {
+            product {
+              name
+            }
+            alignment
+          }
+          ... on ViaProductAlignment {
+            product {
+              name
+            }
+            viaProduct {
+              name
+            }
+            alignment
+          }
+        }
+      }
     }
   }
 }
