@@ -1,0 +1,5 @@
+type Goal {
+    id: ID!
+    name: String!
+    description: String!
+}

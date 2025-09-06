@@ -1,0 +1,12 @@
+type Company {
+    id: ID!
+    name: String!
+    sector: String!
+    goalImpacts: [CompanyGoalImpact!]!
+}
+
+extend type Query {
+    listCompanies(page: Int! = 1): [Company!]!
+    getCompany(id: ID!): Company
+    findCompanies(partialName: String!): [Company!]!
+}

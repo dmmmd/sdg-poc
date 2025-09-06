@@ -1,0 +1,6 @@
+enum ImpactLevel {
+    STRONG_POSITIVE,
+    POSITIVE,
+    NEGATIVE,
+    STRONG_NEGATIVE,
+}

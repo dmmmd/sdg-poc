@@ -1,0 +1,6 @@
+type CompanyGoalImpact {
+    company: Company!
+    goal: Goal!
+    impact: Int!
+    factors: [ProductImpact!]!
+}
