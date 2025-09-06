@@ -5,3 +5,11 @@ query CompanyList($page: Int!) {
     sector
   }
 }
+
+query FindCompanies($partialName: String!) {
+  findCompanies(partialName: $partialName) {
+    id
+    name
+    sector
+  }
+}

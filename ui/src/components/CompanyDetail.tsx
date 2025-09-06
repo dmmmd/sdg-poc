@@ -96,9 +96,6 @@ const CompanyDetail: React.FC<CompanyDetailProps> = ({ companyId }) => {
           <div className="alignment-level">
             {alignment.alignment}
           </div>
-          <div className="factor-impact">
-            {formatImpact(factor.impact)}
-          </div>
         </div>
       );
     });

@@ -150,6 +150,13 @@ export type CompanyListQueryVariables = Exact<{
 
 export type CompanyListQuery = { __typename?: 'Query', listCompanies: Array<{ __typename?: 'Company', id: string, name: string, sector: string }> };
 
+export type FindCompaniesQueryVariables = Exact<{
+  partialName: Scalars['String']['input'];
+}>;
+
+
+export type FindCompaniesQuery = { __typename?: 'Query', findCompanies: Array<{ __typename?: 'Company', id: string, name: string, sector: string }> };
+
 
 export const CompanyDetailDocument = gql`
     query CompanyDetail($id: ID!) {
@@ -262,3 +269,45 @@ export type CompanyListQueryHookResult = ReturnType<typeof useCompanyListQuery>;
 export type CompanyListLazyQueryHookResult = ReturnType<typeof useCompanyListLazyQuery>;
 export type CompanyListSuspenseQueryHookResult = ReturnType<typeof useCompanyListSuspenseQuery>;
 export type CompanyListQueryResult = Apollo.QueryResult<CompanyListQuery, CompanyListQueryVariables>;
+export const FindCompaniesDocument = gql`
+    query FindCompanies($partialName: String!) {
+  findCompanies(partialName: $partialName) {
+    id
+    name
+    sector
+  }
+}
+    `;
+
+/**
+ * __useFindCompaniesQuery__
+ *
+ * To run a query within a React component, call `useFindCompaniesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindCompaniesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindCompaniesQuery({
+ *   variables: {
+ *      partialName: // value for 'partialName'
+ *   },
+ * });
+ */
+export function useFindCompaniesQuery(baseOptions: Apollo.QueryHookOptions<FindCompaniesQuery, FindCompaniesQueryVariables> & ({ variables: FindCompaniesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindCompaniesQuery, FindCompaniesQueryVariables>(FindCompaniesDocument, options);
+      }
+export function useFindCompaniesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindCompaniesQuery, FindCompaniesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindCompaniesQuery, FindCompaniesQueryVariables>(FindCompaniesDocument, options);
+        }
+export function useFindCompaniesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<FindCompaniesQuery, FindCompaniesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<FindCompaniesQuery, FindCompaniesQueryVariables>(FindCompaniesDocument, options);
+        }
+export type FindCompaniesQueryHookResult = ReturnType<typeof useFindCompaniesQuery>;
+export type FindCompaniesLazyQueryHookResult = ReturnType<typeof useFindCompaniesLazyQuery>;
+export type FindCompaniesSuspenseQueryHookResult = ReturnType<typeof useFindCompaniesSuspenseQuery>;
+export type FindCompaniesQueryResult = Apollo.QueryResult<FindCompaniesQuery, FindCompaniesQueryVariables>;

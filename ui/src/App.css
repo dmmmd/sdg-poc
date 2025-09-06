@@ -82,6 +82,70 @@ body {
   font-size: 1.2rem;
 }
 
+.search-widget {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.search-input-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-button, .clear-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: white;
+  color: #495057;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  min-width: 60px;
+}
+
+.search-button:hover:not(:disabled) {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.clear-button:hover:not(:disabled) {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.search-button:disabled, .clear-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-status {
+  font-size: 0.8rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
 .company-item {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #e9ecef;
@@ -293,17 +357,8 @@ body {
   border-radius: 3px;
   background-color: #e9ecef;
   color: #495057;
-  margin: 0 0.5rem;
-  min-width: 80px;
+  min-width: 100px;
   text-align: center;
-}
-
-.factor-impact {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #6c757d;
-  min-width: 80px;
-  text-align: right;
 }
 
 .no-factors {
