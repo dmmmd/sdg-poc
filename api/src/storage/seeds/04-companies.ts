@@ -8,6 +8,11 @@ type CompanyCandidate = {
     sector: string;
 };
 
+const getRandomRevenueThousands = (): number => {
+    // Random revenue between 10K and 50B EUR, in thousands
+    return Math.floor(Math.random() * (50_000_000 - 10)) + 10;
+}
+
 export async function seed(): Promise<void> {
     const filename = __dirname + '/companies.csv';
     let amount = 0;
@@ -20,6 +25,7 @@ export async function seed(): Promise<void> {
             const company = {
                 name: candidate.name,
                 sector: candidate.sector,
+                revenueEURThousands: getRandomRevenueThousands(),
             };
             await CompanyModel.query(transaction).insert(company);
             amount++;

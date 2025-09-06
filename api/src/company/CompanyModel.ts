@@ -5,13 +5,15 @@ export const ID = 'id';
 export const NAME = 'name';
 export const SEARCHABLE_NAME = 'searchableName';
 export const SECTOR = 'sector';
+export const REVENUE_EUR_THOUSANDS = 'revenueEURThousands';
 export const CREATED_AT = 'createdAt';
 
 export class CompanyModel extends AbstractModel {
     readonly id!: string;
-    public name!: string;
-    public searchableName!: string;
-    public sector!: string;
+    readonly name!: string;
+    readonly searchableName!: string;
+    readonly sector!: string;
+    readonly revenueEURThousands?: number;
     readonly createdAt!: Date;
 
     static get tableName() {
@@ -26,6 +28,7 @@ export class CompanyModel extends AbstractModel {
                 [ID]: { type: 'string', format: 'uuid' },
                 [NAME]: { type: 'string', minLength: 1, maxLength: 255 },
                 [SECTOR]: { type: 'string', minLength: 1, maxLength: 255 },
+                [REVENUE_EUR_THOUSANDS]: { type: 'integer', minimum: 0 },
             },
         };
     }

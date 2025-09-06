@@ -10,6 +10,7 @@ export async function up(knex: Knex): Promise<void> {
             name VARCHAR(512) NOT NULL, -- For the PoC, we won't bother with uniqueness
             "searchableName" VARCHAR(512) GENERATED ALWAYS AS (lower(name)) STORED,
             sector TEXT,
+            "revenueEURThousands" INTEGER,
             "createdAt"  TIMESTAMP NOT NULL DEFAULT now()
         );
 

@@ -8,6 +8,7 @@ import {goalResolvers} from "../goal/goalResolvers";
 import {helloResolvers} from "../hello/helloResolvers";
 import {productResolvers} from "../product/productResolvers";
 import {productImpactResolvers} from "../product/productImpactResolvers";
+import {productImpactFactorResolvers} from "../product/productImpactFactorResolvers";
 
 export const getResolvers = (): IResolvers => merge([
     companyResolvers,
@@ -16,4 +17,5 @@ export const getResolvers = (): IResolvers => merge([
     helloResolvers,
     productResolvers,
     productImpactResolvers,
+    productImpactFactorResolvers,
 ]);

@@ -3,6 +3,18 @@ import {logError, logInfo} from "../../logger/loggerFacade";
 import {ProductModel, ID as P_ID} from "../../product/ProductModel";
 import {CompanyModel, ID as C_ID} from "../../company/CompanyModel";
 
+const getRandomShares = (bucketAmount: number): number[] => {
+    let total = 0;
+    const shares = new Array<number>(bucketAmount);
+    for (let i = 0; i < bucketAmount - 1; i++) {
+        const share = Math.random() * (1 - total);
+        shares[i] = share;
+        total += share;
+    }
+    shares[bucketAmount - 1] = 1 - total;
+    return shares;
+}
+
 export async function seed(): Promise<void> {
     const allProductIds = await ProductModel.query()
         .select([P_ID])
@@ -37,10 +49,13 @@ export async function seed(): Promise<void> {
             for (const companyId of companyIds) {
                 const productIds = getRandomProductIds();
                 if (productIds.length > 0) {
+                    const revenueShares = getRandomShares(productIds.length);
+
                     await CompanyProductLinkModel.query(transaction)
-                        .insert(productIds.map(productId => ({
+                        .insert(productIds.map((productId, i) => ({
                             companyId,
                             productId,
+                            revenueShare: revenueShares[i],
                         })))
                         // Conflicts are not possible due to prior truncation
                         .execute();

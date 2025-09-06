@@ -1,17 +1,21 @@
 import {createLoader} from "../loader/loaderFactory";
-import {CompanyProductLinkModel, COMPANY_ID, PRODUCT_ID} from "./CompanyProductLinkModel";
+import {CompanyProductLinkModel, COMPANY_ID, PRODUCT_ID, REVENUE_SHARE} from "./CompanyProductLinkModel";
+import {CompanyProductLink, createCompanyProductLink} from "./CompanyProductLink";
 
-const companyProductIdsLoader = createLoader(async (companyIds: string[]) => {
+const companyProductLinksLoader = createLoader(async (companyIds: string[]) => {
     const rows = await CompanyProductLinkModel.query()
-        .select(COMPANY_ID, PRODUCT_ID)
+        .select(COMPANY_ID, PRODUCT_ID, REVENUE_SHARE)
         .whereIn(COMPANY_ID, companyIds)
         .execute();
 
-    return companyIds.map(id => rows.filter(row => row.companyId === id).map(row => row.productId));
+    return companyIds.map(id => rows
+        .filter(row => row.companyId === id)
+        .map(row => createCompanyProductLink(row.companyId, row.productId, row.revenueShare))
+    );
 }, {
     cacheSize: 1000,
 });
 
-export const loadCompanyProductIds = (companyId: string): Promise<string[]> => {
-    return companyProductIdsLoader.load(companyId);
+export const loadCompanyProductLinks = (companyId: string): Promise<CompanyProductLink[]> => {
+    return companyProductLinksLoader.load(companyId);
 };

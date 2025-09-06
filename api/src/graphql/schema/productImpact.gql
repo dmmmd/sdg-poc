@@ -16,3 +16,8 @@ type ViaProductImpact implements ProductImpact {
     viaProduct: Product!
     impactLevel: ImpactLevel!
 }
+
+type ProductImpactFactor {
+    impact: ProductImpact!
+    factor: Int!
+}

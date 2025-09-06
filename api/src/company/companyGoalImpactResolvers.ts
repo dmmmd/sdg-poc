@@ -1,11 +1,14 @@
 import {CompanyGoalImpact} from "./CompanyGoalImpact";
-import {ProductImpact} from "../product/ProductImpact";
+import {ProductImpactFactor} from "../product/ProductImpactFactor";
 
 export const companyGoalImpactResolvers = {
     CompanyGoalImpact: {
         company: (impact: CompanyGoalImpact): string => impact.companyId,
         goal: (impact: CompanyGoalImpact): string => impact.goalId,
-        impact: (impact: CompanyGoalImpact): Promise<number> => impact.getImpact(),
-        factors: (impact: CompanyGoalImpact): Promise<ProductImpact[]> => impact.getFactors(),
+        impact: async (impact: CompanyGoalImpact): Promise<number> => {
+            const value = await impact.getImpact();
+            return Math.round(value);
+        },
+        factors: (impact: CompanyGoalImpact): Promise<ProductImpactFactor[]> => impact.getFactors(),
     },
 };

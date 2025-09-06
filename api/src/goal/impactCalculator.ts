@@ -1,23 +1,29 @@
 import {ImpactLevel} from "./impactLevels";
 import {logError} from "../logger/loggerFacade";
+import {ProductImpactFactor} from "../product/ProductImpactFactor";
+
+const IMPACT_POSITIVE_IMBALANCE = 0.9; // It is harder to make a positive impact than a negative one
 
 class ImpactCalculator {
-    private levels: Map<ImpactLevel, number> = new Map();
+    private leveledImpacts: Map<ImpactLevel, number> = new Map();
 
-    public addImpactLevel(level: ImpactLevel): void {
-        const amount = this.levels.get(level) || 0;
-        this.levels.set(level, amount + 1);
+    public addImpactFactor(factor: ProductImpactFactor): void {
+        const level = factor.impact.impactLevel;
+        const amount = factor.factor;
+
+        const total = this.leveledImpacts.get(level) || 0;
+        this.leveledImpacts.set(level, total + amount);
     }
 
     public calculateTotalImpact(): number {
         let total = 0;
-        for (const [level, amount] of this.levels.entries()) {
+        for (const [level, amount] of this.leveledImpacts.entries()) {
             switch (level) {
                 case ImpactLevel.STRONG_POSITIVE:
-                    total += amount * 90;
+                    total += amount * 100 * IMPACT_POSITIVE_IMBALANCE;
                     break;
                 case ImpactLevel.POSITIVE:
-                    total += amount * 9;
+                    total += amount * 10 * IMPACT_POSITIVE_IMBALANCE;
                     break;
                 case ImpactLevel.NEGATIVE:
                     total -= amount * 10;

@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
         CREATE TABLE company_products (
             "companyId" UUID NOT NULL,
             "productId" UUID NOT NULL,
+            "revenueShare" FLOAT NOT NULL CHECK ("revenueShare" >= 0 AND "revenueShare" <= 1),
             "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
             PRIMARY KEY ("companyId", "productId")
         );
