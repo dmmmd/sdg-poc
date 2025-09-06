@@ -26,6 +26,7 @@ services:
       - '4001:4000'
     environment:
       NODE_ENV: development
+      DEBUG: knex:*
       DATABASE_URL: postgres://upright:upright@storage:5432/upright
     depends_on:
       - storage
