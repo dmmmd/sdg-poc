@@ -6,12 +6,14 @@ export async function up(knex: Knex): Promise<void> {
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
         CREATE TABLE companies (
-            id           UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
-            name         TEXT        NOT NULL,-- Not going to deal with uniqueness for now
+            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            name VARCHAR(512) NOT NULL, -- For the PoC, we won't bother with uniqueness
+            "searchableName" VARCHAR(512) GENERATED ALWAYS AS (lower(name)) STORED,
+            sector TEXT,
             "createdAt"  TIMESTAMP NOT NULL DEFAULT now()
         );
 
-        CREATE INDEX companies_name_search_idx ON companies USING GIN(name gin_trgm_ops);
+        CREATE INDEX companies_name_search_idx ON companies USING GIN("searchableName" gin_trgm_ops);
     `);
 }
 

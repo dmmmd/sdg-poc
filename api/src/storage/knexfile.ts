@@ -3,6 +3,7 @@ const config = {
     connection: process.env.DATABASE_URL,
     migrations: {
         directory: './migrations',
+        seed: './seeds',
         extension: 'ts',
         tableName: 'knex_migrations',
     },
