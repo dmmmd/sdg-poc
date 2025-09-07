@@ -1,6 +1,6 @@
-import {createLoader} from "../loader/loaderFactory";
-import {CompanyProductLinkModel, COMPANY_ID, PRODUCT_ID, REVENUE_SHARE} from "./CompanyProductLinkModel";
-import {CompanyProductLink, createCompanyProductLink} from "./CompanyProductLink";
+import {createLoader} from '../loader/loaderFactory';
+import {CompanyProductLink, createCompanyProductLink} from './CompanyProductLink';
+import {COMPANY_ID, CompanyProductLinkModel, PRODUCT_ID, REVENUE_SHARE} from './CompanyProductLinkModel';
 
 const companyProductLinksLoader = createLoader(async (companyIds: string[]): Promise<CompanyProductLink[][]> => {
     const rows = await CompanyProductLinkModel.query()
@@ -10,7 +10,7 @@ const companyProductLinksLoader = createLoader(async (companyIds: string[]): Pro
 
     return companyIds.map(id => rows
         .filter(row => row.companyId === id)
-        .map(row => createCompanyProductLink(row.companyId, row.productId, row.revenueShare))
+        .map(row => createCompanyProductLink(row.companyId, row.productId, row.revenueShare)),
     );
 }, {
     cacheSize: 1000,

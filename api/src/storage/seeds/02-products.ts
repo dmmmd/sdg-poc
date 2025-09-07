@@ -1,24 +1,24 @@
-import {logError, logInfo} from "../../logger/loggerFacade";
-import {readCsvFile} from "../../csv/readCsvFile";
-import {ProductModel} from "../../product/ProductModel";
+import {readCsvFile} from '../../csv/readCsvFile';
+import {logError, logInfo} from '../../logger/loggerFacade';
+import {ProductModel} from '../../product/ProductModel';
 
 type ProductCandidate = {
     name: string;
     slug: string;
-    parentPath: string | null;
+    parentPath: string|null;
 };
 
 type InsertCandidate = {
     name: string;
     slug: string;
-    parentId: string | null;
+    parentId: string|null;
     path: string;
 };
 
 export async function seed(): Promise<void> {
     const products: Map<string, ProductModel> = new Map();
     const orphans: Map<string, ProductCandidate[]> = new Map();
-    const createInsertCandidate = (candidate: ProductCandidate): InsertCandidate | null => {
+    const createInsertCandidate = (candidate: ProductCandidate): InsertCandidate|null => {
         const template = {
             name: candidate.name,
             slug: candidate.slug,

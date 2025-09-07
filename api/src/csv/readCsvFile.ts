@@ -1,5 +1,5 @@
-import fs from "fs";
-import csv from "csv-parser";
+import csv from 'csv-parser';
+import fs from 'fs';
 
 export type csvVisitor<T> = (item: T) => Promise<void>;
 
@@ -10,4 +10,4 @@ export const readCsvFile = async <T>(filename: string, visitor: csvVisitor<T>): 
     for await (const row of stream) {
         await visitor(row as T);
     }
-}
+};

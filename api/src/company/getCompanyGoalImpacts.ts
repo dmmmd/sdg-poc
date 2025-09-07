@@ -1,15 +1,16 @@
-import {CalculatedCompanyGoalImpact, CompanyGoalImpact, createCalculatedCompanyGoalImpact} from "./CompanyGoalImpact";
-import {loadCompanyProductLinks} from "./companyProductLinkLoaders";
-import {loadProductImpacts} from "../product/productImpactLoaders";
-import {loadCompany} from "./companyLoaders";
-import {createCalculatedProductImpact} from "../product/ProductImpact";
+import {createCalculatedProductImpact} from '../product/ProductImpact';
+import {loadProductImpacts} from '../product/productImpactLoaders';
+import {CalculatedCompanyGoalImpact, CompanyGoalImpact, createCalculatedCompanyGoalImpact} from './CompanyGoalImpact';
+import {loadCompany} from './companyLoaders';
+import {loadCompanyProductLinks} from './companyProductLinkLoaders';
 
-export const getCompanyGoalImpacts = async (companyId: string, goalId: string|undefined = undefined): Promise<CompanyGoalImpact[]> => {
+export const getCompanyGoalImpacts = async (companyId: string,
+                                            goalId: string|undefined = undefined): Promise<CompanyGoalImpact[]> => {
     const goalImpacts: Map<string, CalculatedCompanyGoalImpact> = new Map();
 
     const [company, productLinks] = await Promise.all([
         loadCompany(companyId),
-        loadCompanyProductLinks(companyId)
+        loadCompanyProductLinks(companyId),
     ]);
 
     await Promise.all(productLinks.map(async link => {

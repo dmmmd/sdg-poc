@@ -1,4 +1,4 @@
-import {ProductAlignment} from "./ProductAlignment";
+import {ProductAlignment} from './ProductAlignment';
 
 export interface ProductImpact {
     alignment: ProductAlignment;
@@ -9,7 +9,8 @@ class CalculatedProductImpact implements ProductImpact {
     constructor(
         public readonly alignment: ProductAlignment,
         public readonly impact: number,
-    ) {}
+    ) {
+    }
 }
 
 export const createCalculatedProductImpact = (alignment: ProductAlignment, impact: number): ProductImpact => {

@@ -1,9 +1,9 @@
-import {AbstractModel, bindModelToDatabase} from "../model/AbstractModel";
-import {STORAGE_GOALS} from "../storage/storageFeatures";
+import {AbstractModel, bindModelToDatabase} from '../model/AbstractModel';
+import {STORAGE_GOALS} from '../storage/storageFeatures';
 
-export const ID = "id";
-export const NAME = "name";
-export const DESCRIPTION = "description";
+export const ID = 'id';
+export const NAME = 'name';
+export const DESCRIPTION = 'description';
 
 export class GoalModel extends AbstractModel {
     readonly id!: string;
@@ -12,17 +12,17 @@ export class GoalModel extends AbstractModel {
     readonly createdAt!: string;
 
     static get tableName(): string {
-        return "goals";
+        return 'goals';
     }
 
     static get jsonSchema() {
         return {
-            type: "object",
+            type: 'object',
             required: [NAME],
             properties: {
-                [ID]: {type: "string", format: "uuid"},
-                [NAME]: {type: "string", minLength: 3, maxLength: 255},
-                [DESCRIPTION]: {type: ["string", "null"]},
+                [ID]: {type: 'string', format: 'uuid'},
+                [NAME]: {type: 'string', minLength: 3, maxLength: 255},
+                [DESCRIPTION]: {type: ['string', 'null']},
             },
         };
     }

@@ -1,6 +1,6 @@
-import {CompanyModel} from "../../company/CompanyModel";
-import {logError, logInfo} from "../../logger/loggerFacade";
-import {readCsvFile} from "../../csv/readCsvFile";
+import {CompanyModel} from '../../company/CompanyModel';
+import {readCsvFile} from '../../csv/readCsvFile';
+import {logError, logInfo} from '../../logger/loggerFacade';
 
 type CompanyCandidate = {
     symbol: string;
@@ -11,7 +11,7 @@ type CompanyCandidate = {
 const getRandomRevenueThousands = (): number => {
     // Random revenue between 10K and 50B EUR, in thousands
     return Math.floor(Math.random() * (50_000_000 - 10)) + 10;
-}
+};
 
 export async function seed(): Promise<void> {
     const filename = __dirname + '/companies.csv';

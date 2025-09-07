@@ -1,14 +1,16 @@
-import {LRUMap} from "lru_map";
-import DataLoader from "dataloader";
+import DataLoader from 'dataloader';
+import {LRUMap} from 'lru_map';
 
 type loaderOptions = {
     // Simplified options support, just for the PoC
     cacheSize?: number; // Undefined means no cache
 };
 
-export const createLoader = function <K, T>(fn: (keys: readonly K[]) => Promise<(T[])>, options?: loaderOptions): DataLoader<K, T> {
+export const createLoader = function <K, T>(fn: (keys: readonly K[]) => Promise<(T[])>,
+                                            options?: loaderOptions): DataLoader<K, T> {
     let opts: object = {
-        cacheKeyFn: key => (typeof key === 'object' ? JSON.stringify(key) : String(key)), // Very naive, but good enough for PoC
+        cacheKeyFn: key => (typeof key === 'object' ? JSON.stringify(key) : String(key)), // Very naive, but good
+                                                                                          // enough for PoC
     };
 
     const cacheSize = options?.cacheSize;

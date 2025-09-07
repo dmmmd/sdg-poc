@@ -1,13 +1,13 @@
-import {logError, logInfo} from "../../logger/loggerFacade";
-import {ProductAlignmentModel} from "../../product/ProductAlignmentModel";
-import {ProductModel, ID as P_ID} from "../../product/ProductModel";
-import {AlignmentLevel, validAlignmentLevels} from "../../goal/alignmentLevels";
-import {loadGoalIds} from "../../goal/goalLoaders";
+import {AlignmentLevel, validAlignmentLevels} from '../../goal/alignmentLevels';
+import {loadGoalIds} from '../../goal/goalLoaders';
+import {logError, logInfo} from '../../logger/loggerFacade';
+import {ProductAlignmentModel} from '../../product/ProductAlignmentModel';
+import {ID as P_ID, ProductModel} from '../../product/ProductModel';
 
 const getRandomAlignment = (): AlignmentLevel => {
     const randomIndex = Math.floor(Math.random() * validAlignmentLevels.length);
     return validAlignmentLevels[randomIndex];
-}
+};
 
 export async function seed(): Promise<void> {
     const allGoalIds = await loadGoalIds();
@@ -46,7 +46,7 @@ export async function seed(): Promise<void> {
                                 productId,
                                 goalId,
                                 alignment: getRandomAlignment(),
-                            }
+                            };
                         }))
                         // Conflicts are not possible due to prior truncation
                         .execute();

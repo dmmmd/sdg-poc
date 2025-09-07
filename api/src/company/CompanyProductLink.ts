@@ -9,7 +9,8 @@ class CompanyProductLinkDto implements CompanyProductLink {
         public readonly companyId: string,
         public readonly productId: string,
         public readonly revenueShare: number,
-        ) {}
+    ) {
+    }
 }
 
 export const createCompanyProductLink = (

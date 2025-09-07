@@ -1,5 +1,5 @@
-import {createLoader} from "../loader/loaderFactory";
-import {ProductModel} from "./ProductModel";
+import {createLoader} from '../loader/loaderFactory';
+import {ProductModel} from './ProductModel';
 
 const productModelLoader = createLoader(async (ids: string[]) => {
     const products = await ProductModel.query().findByIds(ids).execute();
@@ -8,6 +8,6 @@ const productModelLoader = createLoader(async (ids: string[]) => {
     cacheSize: 200,
 });
 
-export const loadProduct = (id: string): Promise<ProductModel | undefined> => {
+export const loadProduct = (id: string): Promise<ProductModel|undefined> => {
     return productModelLoader.load(id);
 };

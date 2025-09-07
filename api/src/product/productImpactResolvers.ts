@@ -1,5 +1,5 @@
-import {ProductAlignment} from "./ProductAlignment";
-import {ProductImpact} from "./ProductImpact";
+import {ProductAlignment} from './ProductAlignment';
+import {ProductImpact} from './ProductImpact';
 
 export const productImpactResolvers = {
     ProductImpact: {

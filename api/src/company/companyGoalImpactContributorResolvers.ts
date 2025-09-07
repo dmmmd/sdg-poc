@@ -1,7 +1,7 @@
-import {goalImpactContributorPropertyResolvers} from "../goal/goalImpactContributorResolvers";
-import {CompanyGoalImpactContributor} from "./CompanyGoalImpactContributor";
-import {ProductImpact} from "../product/ProductImpact";
-import {getCompanyGoalImpacts} from "./getCompanyGoalImpacts";
+import {goalImpactContributorPropertyResolvers} from '../goal/goalImpactContributorResolvers';
+import {ProductImpact} from '../product/ProductImpact';
+import {CompanyGoalImpactContributor} from './CompanyGoalImpactContributor';
+import {getCompanyGoalImpacts} from './getCompanyGoalImpacts';
 
 export const companyGoalImpactContributorResolvers = {
     CompanyGoalImpactContributor: {
@@ -13,6 +13,6 @@ export const companyGoalImpactContributorResolvers = {
             const impacts = await getCompanyGoalImpacts(contributor.companyId, contributor.goalId);
             const factors = await Promise.all(impacts.map(impact => impact.getFactors()));
             return factors.flat();
-        }
-    }
+        },
+    },
 };

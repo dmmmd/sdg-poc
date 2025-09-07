@@ -1,11 +1,11 @@
-import {CompanyModel, NAME, SECTOR} from "./CompanyModel";
-import {findCompany, loadCompany, loadCompanyIdsByPage} from "./companyLoaders";
-import {loadModelProperty} from "../graphql/modelPropertyResolver";
-import {CompanyGoalImpact} from "./CompanyGoalImpact";
-import {getCompanyGoalImpacts} from "./getCompanyGoalImpacts";
-import {ApolloServerValidationErrorCode} from "@apollo/server/errors";
-import {GraphQLError} from "graphql/error";
-import {loadCompanyProductIds} from "./companyProductLinkLoaders";
+import {ApolloServerValidationErrorCode} from '@apollo/server/errors';
+import {GraphQLError} from 'graphql/error';
+import {loadModelProperty} from '../graphql/modelPropertyResolver';
+import {CompanyGoalImpact} from './CompanyGoalImpact';
+import {findCompany, loadCompany, loadCompanyIdsByPage} from './companyLoaders';
+import {CompanyModel, NAME, SECTOR} from './CompanyModel';
+import {loadCompanyProductIds} from './companyProductLinkLoaders';
+import {getCompanyGoalImpacts} from './getCompanyGoalImpacts';
 
 export const companyResolvers = {
     Company: {
@@ -25,7 +25,7 @@ export const companyResolvers = {
             return loadCompanyIdsByPage(page);
         },
 
-        getCompany: async (_, {id}: {id: string}): Promise<string | null> => {
+        getCompany: async (_, {id}: {id: string}): Promise<string|null> => {
             const company = await loadCompany(id);
             return company?.id;
         },
@@ -39,6 +39,6 @@ export const companyResolvers = {
             }
 
             return findCompany(partialName);
-        }
-    }
+        },
+    },
 };

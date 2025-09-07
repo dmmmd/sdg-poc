@@ -1,14 +1,14 @@
-import Knex from "knex";
+import Knex from 'knex';
 import config from './knexfile';
 
-let singleDbInstance: Knex.Knex | undefined;
+let singleDbInstance: Knex.Knex|undefined;
 
 const getSingleDbInstance = (): Knex.Knex => {
     if (!singleDbInstance) {
         singleDbInstance = Knex(config);
     }
     return singleDbInstance!;
-}
+};
 
 const databases: Map<string, Knex.Knex> = new Map();
 
@@ -19,4 +19,4 @@ export const getDatabase = (feature: string): Knex.Knex => {
         databases.set(feature, getSingleDbInstance());
     }
     return databases.get(feature)!;
-}
+};

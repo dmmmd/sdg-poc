@@ -1,7 +1,7 @@
-import {CompanyProductLinkModel} from "../../company/CompanyProductLinkModel";
-import {logError, logInfo} from "../../logger/loggerFacade";
-import {ProductModel, ID as P_ID} from "../../product/ProductModel";
-import {CompanyModel, ID as C_ID} from "../../company/CompanyModel";
+import {CompanyModel, ID as C_ID} from '../../company/CompanyModel';
+import {CompanyProductLinkModel} from '../../company/CompanyProductLinkModel';
+import {logError, logInfo} from '../../logger/loggerFacade';
+import {ID as P_ID, ProductModel} from '../../product/ProductModel';
 
 const getRandomShares = (bucketAmount: number): number[] => {
     let total = 0;
@@ -13,7 +13,7 @@ const getRandomShares = (bucketAmount: number): number[] => {
     }
     shares[bucketAmount - 1] = 1 - total;
     return shares;
-}
+};
 
 export async function seed(): Promise<void> {
     const allProductIds = await ProductModel.query()

@@ -1,10 +1,10 @@
-import {createLoader} from "../loader/loaderFactory";
-import {COMPANY_ID, GOAL_ID, GoalImpactRecordModel, IMPACT} from "./GoalImpactRecordModel";
-import {ImpactDirection} from "./ImpactDirection";
 import {
     CompanyGoalImpactContributor,
-    createCompanyGoalImpactContributor
-} from "../company/CompanyGoalImpactContributor";
+    createCompanyGoalImpactContributor,
+} from '../company/CompanyGoalImpactContributor';
+import {createLoader} from '../loader/loaderFactory';
+import {COMPANY_ID, GOAL_ID, GoalImpactRecordModel, IMPACT} from './GoalImpactRecordModel';
+import {ImpactDirection} from './ImpactDirection';
 
 const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTuples: [string, ImpactDirection][]): Promise<CompanyGoalImpactContributor[][]> => {
     const batchAlias = 'batch';
@@ -12,14 +12,14 @@ const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTupl
         GoalImpactRecordModel.query()
             .select(
                 GoalImpactRecordModel.raw('?::integer as ??', [batch, batchAlias]),
-                GOAL_ID, COMPANY_ID, IMPACT
+                GOAL_ID, COMPANY_ID, IMPACT,
             )
             .where(GOAL_ID, goalId)
             .andWhere(IMPACT, direction === ImpactDirection.POSITIVE ? '>' : '<', 0)
             .groupBy(GOAL_ID, COMPANY_ID, IMPACT)
             .orderBy(IMPACT, direction === ImpactDirection.POSITIVE ? 'desc' : 'asc')
             .limit(25)
-            .toKnexQuery()
+            .toKnexQuery(),
     );
 
     const rows: GoalImpactRecordModel[] = await GoalImpactRecordModel.knex().unionAll(selectors, true);
@@ -33,6 +33,7 @@ const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTupl
     cacheSize: 100,
 });
 
-export const loadCompanyGoalContributors = (goalId: string, direction: ImpactDirection = ImpactDirection.POSITIVE): Promise<CompanyGoalImpactContributor[]> => {
+export const loadCompanyGoalContributors = (goalId: string,
+                                            direction: ImpactDirection = ImpactDirection.POSITIVE): Promise<CompanyGoalImpactContributor[]> => {
     return goalImpactCompanyContributorLoader.load([goalId, direction]);
 };

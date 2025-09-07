@@ -1,4 +1,4 @@
 export const enum ImpactDirection {
-    POSITIVE = "POSITIVE",
-    NEGATIVE = "NEGATIVE",
+    POSITIVE = 'POSITIVE',
+    NEGATIVE = 'NEGATIVE',
 }

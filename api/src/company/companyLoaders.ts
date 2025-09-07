@@ -1,5 +1,5 @@
-import {CompanyModel, ID, NAME, SEARCHABLE_NAME} from "./CompanyModel";
-import {createLoader} from "../loader/loaderFactory";
+import {createLoader} from '../loader/loaderFactory';
+import {CompanyModel, ID, NAME, SEARCHABLE_NAME} from './CompanyModel';
 
 const paginatedCompaniesLoader = createLoader(async (pages: number[]) => {
     const pageSize = 100;
@@ -10,7 +10,7 @@ const paginatedCompaniesLoader = createLoader(async (pages: number[]) => {
 
     const rows = await CompanyModel.query()
         .with(numberedCompaniesAlias, CompanyModel.query()
-            .select(ID, NAME, CompanyModel.raw('ROW_NUMBER() OVER (ORDER BY ??) as ??', [SEARCHABLE_NAME, indexAlias]))
+            .select(ID, NAME, CompanyModel.raw('ROW_NUMBER() OVER (ORDER BY ??) as ??', [SEARCHABLE_NAME, indexAlias])),
         )
 
         .select(indexAlias, ID)
@@ -37,7 +37,7 @@ const companyModelLoader = createLoader(async (ids: string[]) => {
     cacheSize: 200,
 });
 
-export const loadCompany = (id: string): Promise<CompanyModel | undefined> => {
+export const loadCompany = (id: string): Promise<CompanyModel|undefined> => {
     return companyModelLoader.load(id);
 };
 
@@ -47,12 +47,12 @@ const companyFinderLoader = createLoader(async (partialNames: string[]): Promise
         CompanyModel.query()
             .select(
                 CompanyModel.raw('? as ??', [term, termAlias]),
-                ID
+                ID,
             )
-            .whereRaw("?? LIKE '%' || ? || '%'", [SEARCHABLE_NAME, term])
+            .whereRaw('?? LIKE \'%\' || ? || \'%\'', [SEARCHABLE_NAME, term])
             .orderBy(SEARCHABLE_NAME)
             .limit(25)
-            .toKnexQuery()
+            .toKnexQuery(),
     );
 
     const rows = await CompanyModel.knex().unionAll(selectors, true);

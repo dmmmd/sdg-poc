@@ -1,5 +1,5 @@
-import {CompanyGoalImpact} from "./CompanyGoalImpact";
-import {ProductImpact} from "../product/ProductImpact";
+import {ProductImpact} from '../product/ProductImpact';
+import {CompanyGoalImpact} from './CompanyGoalImpact';
 
 export const companyGoalImpactResolvers = {
     CompanyGoalImpact: {

@@ -1,5 +1,5 @@
-import {GoalModel, ID, NAME} from "./GoalModel";
-import {createLoader} from "../loader/loaderFactory";
+import {createLoader} from '../loader/loaderFactory';
+import {GoalModel, ID, NAME} from './GoalModel';
 
 const goalIdsLoader = createLoader(async (keys) => {
     const ids = await GoalModel.query()
@@ -23,6 +23,6 @@ const goalModelLoader = createLoader(async (ids: string[]) => {
     cacheSize: 200,
 });
 
-export const loadGoal = (id: string): Promise<GoalModel | undefined> => {
+export const loadGoal = (id: string): Promise<GoalModel|undefined> => {
     return goalModelLoader.load(id);
 };

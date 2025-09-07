@@ -1,10 +1,12 @@
-import {createImpactCalculator} from "../goal/impactCalculator";
-import {ProductImpact} from "../product/ProductImpact";
+import {createImpactCalculator} from '../goal/impactCalculator';
+import {ProductImpact} from '../product/ProductImpact';
 
 export interface CompanyGoalImpact {
     companyId: string;
     goalId: string;
+
     getImpact(): Promise<number>;
+
     getFactors(): Promise<ProductImpact[]>;
 }
 
@@ -15,7 +17,8 @@ export class CalculatedCompanyGoalImpact implements CompanyGoalImpact {
     constructor(
         public readonly companyId: string,
         public readonly goalId: string,
-    ) {}
+    ) {
+    }
 
     public async getFactors(): Promise<ProductImpact[]> {
         return this.factors;
@@ -38,4 +41,4 @@ export class CalculatedCompanyGoalImpact implements CompanyGoalImpact {
 
 export const createCalculatedCompanyGoalImpact = (companyId: string, goalId: string): CalculatedCompanyGoalImpact => {
     return new CalculatedCompanyGoalImpact(companyId, goalId);
-}
+};

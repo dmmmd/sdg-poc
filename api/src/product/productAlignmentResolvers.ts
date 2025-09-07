@@ -1,5 +1,5 @@
-import {DirectProductAlignment, ProductAlignment, ViaProductAlignment} from "./ProductAlignment";
-import {AlignmentLevel} from "../goal/alignmentLevels";
+import {AlignmentLevel} from '../goal/alignmentLevels';
+import {DirectProductAlignment, ProductAlignment, ViaProductAlignment} from './ProductAlignment';
 
 const productAlignmentPropertyResolvers = {
     goal: (alignment: ProductAlignment): string => alignment.goalId,
@@ -21,15 +21,15 @@ const productAlignmentPropertyResolvers = {
                 throw new Error(`Unsupported alignment level: ${level}`);
         }
     },
-}
+};
 
 export const productAlignmentResolvers = {
     ProductAlignment: {
         __resolveType(alignment: ProductAlignment): string {
             if (alignment instanceof DirectProductAlignment) {
-                return "DirectProductAlignment";
+                return 'DirectProductAlignment';
             } else if (alignment instanceof ViaProductAlignment) {
-                return "ViaProductAlignment";
+                return 'ViaProductAlignment';
             }
 
             throw new Error(`Unsupported ProductAlignment type: ${alignment}`);

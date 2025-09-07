@@ -1,6 +1,12 @@
-import {createLoader} from "../loader/loaderFactory";
-import {createDirectProductAlignment, createViaProductAlignment, ProductAlignment} from "./ProductAlignment";
-import {InheritedProductAlignmentModel, PRODUCT_ID, GOAL_ID, ALIGNMENT, VIA_PRODUCT_ID} from "./InheritedProductAlignmentModel";
+import {createLoader} from '../loader/loaderFactory';
+import {
+    ALIGNMENT,
+    GOAL_ID,
+    InheritedProductAlignmentModel,
+    PRODUCT_ID,
+    VIA_PRODUCT_ID,
+} from './InheritedProductAlignmentModel';
+import {createDirectProductAlignment, createViaProductAlignment, ProductAlignment} from './ProductAlignment';
 
 const productImpactsLoader = createLoader(async (productGoalTuples: [string, string|undefined][]) => {
     const productIds: string[] = [], tuples: [string, string][] = [];
@@ -38,6 +44,7 @@ const productImpactsLoader = createLoader(async (productGoalTuples: [string, str
     cacheSize: 1000,
 });
 
-export const loadProductImpacts = (productId: string, goalId: string|undefined = undefined): Promise<ProductAlignment[]> => {
+export const loadProductImpacts = (productId: string,
+                                   goalId: string|undefined = undefined): Promise<ProductAlignment[]> => {
     return productImpactsLoader.load([productId, goalId]);
 };

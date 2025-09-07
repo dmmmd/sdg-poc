@@ -1,5 +1,5 @@
-import {AbstractModel, bindModelToDatabase} from "../model/AbstractModel";
-import {STORAGE_COMPANIES} from "../storage/storageFeatures";
+import {AbstractModel, bindModelToDatabase} from '../model/AbstractModel';
+import {STORAGE_COMPANIES} from '../storage/storageFeatures';
 
 export const ID = 'id';
 export const NAME = 'name';
@@ -24,10 +24,10 @@ export class CompanyModel extends AbstractModel {
             type: 'object',
             required: [NAME, SECTOR],
             properties: {
-                [ID]: { type: 'string', format: 'uuid' },
-                [NAME]: { type: 'string', minLength: 1, maxLength: 255 },
-                [SECTOR]: { type: 'string', maxLength: 255 },
-                [REVENUE_EUR_THOUSANDS]: { type: 'integer', minimum: 0 },
+                [ID]: {type: 'string', format: 'uuid'},
+                [NAME]: {type: 'string', minLength: 1, maxLength: 255},
+                [SECTOR]: {type: 'string', maxLength: 255},
+                [REVENUE_EUR_THOUSANDS]: {type: 'integer', minimum: 0},
             },
         };
     }

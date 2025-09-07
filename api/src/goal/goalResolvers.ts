@@ -1,9 +1,9 @@
-import {loadModelProperty} from "../graphql/modelPropertyResolver";
-import {GoalModel, NAME, DESCRIPTION} from "./GoalModel";
-import {loadGoal, loadGoalIds} from "./goalLoaders";
-import {CompanyGoalImpactContributor} from "../company/CompanyGoalImpactContributor";
-import {ImpactDirection} from "./ImpactDirection";
-import {loadCompanyGoalContributors} from "./goalImpactRecordLoaders";
+import {CompanyGoalImpactContributor} from '../company/CompanyGoalImpactContributor';
+import {loadModelProperty} from '../graphql/modelPropertyResolver';
+import {loadCompanyGoalContributors} from './goalImpactRecordLoaders';
+import {loadGoal, loadGoalIds} from './goalLoaders';
+import {DESCRIPTION, GoalModel, NAME} from './GoalModel';
+import {ImpactDirection} from './ImpactDirection';
 
 export const goalResolvers = {
     Goal: {
@@ -13,7 +13,9 @@ export const goalResolvers = {
 
         description: (id: string): Promise<string> => loadModelProperty<GoalModel, string>(id, DESCRIPTION, loadGoal),
 
-        contributorCompanies: (goalId: string, {direction}: {direction: ImpactDirection}): Promise<CompanyGoalImpactContributor[]> => {
+        contributorCompanies: (goalId: string, {direction}: {
+            direction: ImpactDirection
+        }): Promise<CompanyGoalImpactContributor[]> => {
             return loadCompanyGoalContributors(goalId, direction);
         },
     },
@@ -21,7 +23,7 @@ export const goalResolvers = {
     Query: {
         listGoals: (): Promise<string[]> => loadGoalIds(),
 
-        getGoal: async (_, {id}: {id: string}): Promise<string | undefined> => {
+        getGoal: async (_, {id}: {id: string}): Promise<string|undefined> => {
             const goal = await loadGoal(id);
             return goal?.id;
         },

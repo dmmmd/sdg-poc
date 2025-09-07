@@ -1,4 +1,4 @@
-import {AlignmentLevel} from "../goal/alignmentLevels";
+import {AlignmentLevel} from '../goal/alignmentLevels';
 
 export interface ProductAlignment {
     goalId: string;
@@ -11,7 +11,8 @@ abstract class AbstractCalculatedProductAlignment implements ProductAlignment {
         public readonly goalId: string,
         public readonly productId: string,
         public readonly alignment: AlignmentLevel,
-    ) {}
+    ) {
+    }
 }
 
 export class DirectProductAlignment extends AbstractCalculatedProductAlignment implements ProductAlignment {

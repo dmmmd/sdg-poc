@@ -1,6 +1,6 @@
-import {AlignmentLevel} from "./alignmentLevels";
-import {logError} from "../logger/loggerFacade";
-import {ProductImpact} from "../product/ProductImpact";
+import {logError} from '../logger/loggerFacade';
+import {ProductImpact} from '../product/ProductImpact';
+import {AlignmentLevel} from './alignmentLevels';
 
 export const IMPACT_POSITIVE_IMBALANCE = 0.9; // It is harder to make a positive impact than a negative one
 export const ORDER_OF_MAGNITUDE = 10;

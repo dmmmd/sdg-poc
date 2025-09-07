@@ -1,11 +1,12 @@
-import {AbstractModel} from "../model/AbstractModel";
+import {AbstractModel} from '../model/AbstractModel';
 
-type loaderFunctionType<T> = (id: string|number) => Promise<T | undefined>;
+type loaderFunctionType<T> = (id: string|number) => Promise<T|undefined>;
 
-export const loadModelProperty = async <M extends AbstractModel, T>(id: string|number, property: string, loader: loaderFunctionType<M>): Promise<T|undefined> => {
+export const loadModelProperty = async <M extends AbstractModel, T>(id: string|number, property: string,
+                                                                    loader: loaderFunctionType<M>): Promise<T|undefined> => {
     const model = await loader(id);
     if (!model) {
         throw new Error(`Loader ${loader.name}() found nothing with ID "${id}"`); // @todo proper NotFound error
     }
     return model[property];
-}
+};

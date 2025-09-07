@@ -1,6 +1,6 @@
-import {GoalModel} from "../../goal/GoalModel";
-import {logError, logInfo} from "../../logger/loggerFacade";
-import {readCsvFile} from "../../csv/readCsvFile";
+import {readCsvFile} from '../../csv/readCsvFile';
+import {GoalModel} from '../../goal/GoalModel';
+import {logError, logInfo} from '../../logger/loggerFacade';
 
 type GoalCandidate = {
     name: string;
