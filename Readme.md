@@ -11,7 +11,7 @@ In the UI I take creative liberties to demonstrate the concept. Impact values ar
 - The alignment data is **randomly generated** during the seed
 
 ## TLDR How to use
-1. `git clone git@github.com:dmmmd/uprght.git savonsuo-upright && cd savonsuo-upright && make up migrate seed`
+1. `git clone git@github.com:dmmmd/uprght.git && cd uprght && make up migrate seed`
 2. Open the UI at http://127.0.0.1:3001/
 3. `make down` to stop the containers, keeping the data
 4. `make up` to start again
