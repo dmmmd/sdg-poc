@@ -3,6 +3,13 @@ This is a PoC for the application to visually summarize the alignment of a given
 
 In the UI I take creative liberties to demonstrate the concept. Impact values are based on the revenue as required, but of course there should be more complex logic in the real world. I don't even have a flow of time, there are no years with different revenue, each company just has one number.
 
+### The data
+- Companies are taken from S&P 500 list
+- Products/services are from Google product taxonomy
+- SDGs are from the official UN list
+- Company-product relationships are **randomly generated** during the seed
+- The alignment data is **randomly generated** during the seed
+
 ## TLDR How to use
 1. `git clone git@github.com:dmmmd/upright.git savonsuo-upright && cd savonsuo-upright && make up migrate seed`
 2. Open the UI at http://127.0.0.1:3001/
