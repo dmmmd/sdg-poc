@@ -8,7 +8,7 @@ import {
 } from './InheritedProductAlignmentModel';
 import {createDirectProductAlignment, createViaProductAlignment, ProductAlignment} from './ProductAlignment';
 
-const productImpactsLoader = createLoader(async (productGoalTuples: [string, string|undefined][]) => {
+const productImpactsLoader = createLoader(async (productGoalTuples: readonly [string, string|undefined][]) => {
     const productIds: string[] = [], tuples: [string, string][] = [];
     for (const [productId, goalId] of productGoalTuples) {
         goalId

@@ -62,7 +62,7 @@ export async function seed(): Promise<void> {
         await transaction.commit();
         logInfo(`Created ${alignmentAmount} alignment records for ${productAmount} products`);
     } catch (error) {
-        logError(error);
+        logError(error as Error);
         await transaction.rollback();
         throw error;
     }

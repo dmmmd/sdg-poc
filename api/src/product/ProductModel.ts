@@ -9,7 +9,7 @@ export const PATH = 'path';
 
 export class ProductModel extends AbstractModel {
     readonly id!: string;
-    readonly parentId!: string;
+    readonly parentId!: string|null;
     readonly name!: string;
     readonly slug!: string;
     readonly path!: string;

@@ -11,7 +11,7 @@ export interface CompanyGoalImpact {
 }
 
 export class CalculatedCompanyGoalImpact implements CompanyGoalImpact {
-    private impact: number;
+    private impact: number|undefined;
     private factors: ProductImpact[] = [];
 
     constructor(

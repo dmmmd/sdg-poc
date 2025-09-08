@@ -19,7 +19,12 @@ export function logInfo(message: string|object): void {
 }
 
 export function logError(message: string): void;
+export function logError(message: Error): void;
 export function logError(message: object): void;
-export function logError(message: string|object): void {
-    logWithLevel(LogLevel.ERROR, message);
+export function logError(message: string|Error|object): void {
+    let loggableMessage = message;
+    if (message instanceof Error) {
+        loggableMessage = `${message.name}: ${message.message}\n${message.stack}`;
+    }
+    logWithLevel(LogLevel.ERROR, loggableMessage);
 }

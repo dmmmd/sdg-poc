@@ -6,7 +6,7 @@ import {createLoader} from '../loader/loaderFactory';
 import {COMPANY_ID, GOAL_ID, GoalImpactRecordModel, IMPACT} from './GoalImpactRecordModel';
 import {ImpactDirection} from './ImpactDirection';
 
-const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTuples: [string, ImpactDirection][]): Promise<CompanyGoalImpactContributor[][]> => {
+const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTuples: readonly [string, ImpactDirection][]): Promise<CompanyGoalImpactContributor[][]> => {
     const batchAlias = 'batch';
     const selectors = goalDirectionTuples.map(([goalId, direction], batch) =>
         GoalImpactRecordModel.query()
@@ -22,7 +22,8 @@ const goalImpactCompanyContributorLoader = createLoader(async (goalDirectionTupl
             .toKnexQuery(),
     );
 
-    const rows: GoalImpactRecordModel[] = await GoalImpactRecordModel.knex().unionAll(selectors, true);
+    type ImpactRecordsWithBatch = GoalImpactRecordModel & {[batchAlias]: number};
+    const rows: ImpactRecordsWithBatch[] = await GoalImpactRecordModel.knex().unionAll(selectors, true);
 
     return goalDirectionTuples.map((_, batch) => {
         return rows.filter(row => row[batchAlias] === batch)

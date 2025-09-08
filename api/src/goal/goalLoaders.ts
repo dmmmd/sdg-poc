@@ -16,8 +16,8 @@ export const loadGoalIds = (): Promise<string[]> => {
     return goalIdsLoader.load(''); // Key is irrelevant here
 };
 
-const goalModelLoader = createLoader(async (ids: string[]) => {
-    const goals = await GoalModel.query().findByIds(ids).execute();
+const goalModelLoader = createLoader(async (ids: readonly string[]) => {
+    const goals = await GoalModel.query().findByIds(ids as string[]).execute();
     return ids.map(id => goals.find(goal => goal.id === id));
 }, {
     cacheSize: 200,

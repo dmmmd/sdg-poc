@@ -1,3 +1,4 @@
+import {PartialModelObject} from 'objection';
 import {readCsvFile} from '../../csv/readCsvFile';
 import {logError, logInfo} from '../../logger/loggerFacade';
 import {ProductModel} from '../../product/ProductModel';
@@ -8,18 +9,13 @@ type ProductCandidate = {
     parentPath: string|null;
 };
 
-type InsertCandidate = {
-    name: string;
-    slug: string;
-    parentId: string|null;
-    path: string;
-};
+type InsertCandidate = PartialModelObject<ProductModel>;
 
 export async function seed(): Promise<void> {
     const products: Map<string, ProductModel> = new Map();
     const orphans: Map<string, ProductCandidate[]> = new Map();
     const createInsertCandidate = (candidate: ProductCandidate): InsertCandidate|null => {
-        const template = {
+        const template: InsertCandidate = {
             name: candidate.name,
             slug: candidate.slug,
             parentId: null,
@@ -42,7 +38,7 @@ export async function seed(): Promise<void> {
         }
 
         orphans.has(parentPath)
-            ? orphans.get(parentPath).push(candidate)
+            ? orphans.get(parentPath)!.push(candidate)
             : orphans.set(parentPath, [candidate]);
 
         return null;
@@ -71,7 +67,7 @@ export async function seed(): Promise<void> {
         await transaction.commit();
         logInfo(`Inserted ${amount} products from ${filename}`);
     } catch (error) {
-        logError(error);
+        logError(error as Error);
         await transaction.rollback();
         throw error;
     }

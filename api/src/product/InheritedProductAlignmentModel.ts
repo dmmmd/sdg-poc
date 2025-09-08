@@ -11,7 +11,7 @@ export class InheritedProductAlignmentModel extends AbstractModel {
     readonly productId!: string;
     readonly goalId!: string;
     readonly alignment!: AlignmentLevel;
-    readonly viaProductId: string|null;
+    readonly viaProductId!: string|null;
 
     static get tableName(): string {
         return 'inherited_product_alignment_records';

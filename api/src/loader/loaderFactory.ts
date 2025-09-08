@@ -6,11 +6,14 @@ type loaderOptions = {
     cacheSize?: number; // Undefined means no cache
 };
 
+type CacheKeyFn = (key: any) => string;
+
 export const createLoader = function <K, T>(fn: (keys: readonly K[]) => Promise<(T[])>,
                                             options?: loaderOptions): DataLoader<K, T> {
+    // Very naive, but good enough for PoC
+    const cacheKeyFn: CacheKeyFn = key => (typeof key === 'string' ? key : JSON.stringify(key));
     let opts: object = {
-        cacheKeyFn: key => (typeof key === 'object' ? JSON.stringify(key) : String(key)), // Very naive, but good
-                                                                                          // enough for PoC
+        cacheKeyFn
     };
 
     const cacheSize = options?.cacheSize;

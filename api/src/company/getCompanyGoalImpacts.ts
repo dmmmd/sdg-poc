@@ -15,7 +15,7 @@ export const getCompanyGoalImpacts = async (companyId: string,
 
     await Promise.all(productLinks.map(async link => {
         const impacts = await loadProductImpacts(link.productId, goalId);
-        const productRevenueAmount = company.revenueEURThousands * link.revenueShare;
+        const productRevenueAmount = company!.revenueEURThousands * link.revenueShare;
         impacts.forEach(impact => {
             const goalId = impact.goalId;
             if (!goalImpacts.has(goalId)) {
@@ -23,7 +23,7 @@ export const getCompanyGoalImpacts = async (companyId: string,
             }
 
             const factor = createCalculatedProductImpact(impact, productRevenueAmount);
-            goalImpacts.get(goalId).addImpactFactor(factor);
+            goalImpacts.get(goalId)!.addImpactFactor(factor);
         });
     }));
 

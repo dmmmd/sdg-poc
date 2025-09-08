@@ -34,7 +34,7 @@ export async function seed(): Promise<void> {
         await transaction.commit();
         logInfo(`Inserted ${amount} companies from ${filename}`);
     } catch (error) {
-        logError(error);
+        logError(error as Error);
         await transaction.rollback();
         throw error;
     }

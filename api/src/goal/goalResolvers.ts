@@ -9,9 +9,9 @@ export const goalResolvers = {
     Goal: {
         id: (id: string): string => id,
 
-        name: (id: string): Promise<string> => loadModelProperty<GoalModel, string>(id, NAME, loadGoal),
+        name: (id: string): Promise<string> => loadModelProperty(id, NAME, loadGoal),
 
-        description: (id: string): Promise<string> => loadModelProperty<GoalModel, string>(id, DESCRIPTION, loadGoal),
+        description: (id: string): Promise<string> => loadModelProperty(id, DESCRIPTION, loadGoal),
 
         contributorCompanies: (goalId: string, {direction}: {
             direction: ImpactDirection
@@ -23,7 +23,7 @@ export const goalResolvers = {
     Query: {
         listGoals: (): Promise<string[]> => loadGoalIds(),
 
-        getGoal: async (_, {id}: {id: string}): Promise<string|undefined> => {
+        getGoal: async (_: any, {id}: {id: string}): Promise<string|undefined> => {
             const goal = await loadGoal(id);
             return goal?.id;
         },

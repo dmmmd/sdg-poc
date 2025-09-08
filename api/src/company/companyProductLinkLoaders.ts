@@ -2,7 +2,7 @@ import {createLoader} from '../loader/loaderFactory';
 import {CompanyProductLink, createCompanyProductLink} from './CompanyProductLink';
 import {COMPANY_ID, CompanyProductLinkModel, PRODUCT_ID, REVENUE_SHARE} from './CompanyProductLinkModel';
 
-const companyProductLinksLoader = createLoader(async (companyIds: string[]): Promise<CompanyProductLink[][]> => {
+const companyProductLinksLoader = createLoader(async (companyIds: readonly string[]): Promise<CompanyProductLink[][]> => {
     const rows = await CompanyProductLinkModel.query()
         .select(COMPANY_ID, PRODUCT_ID, REVENUE_SHARE)
         .whereIn(COMPANY_ID, companyIds)

@@ -6,6 +6,6 @@ export const productResolvers = {
     Product: {
         id: (id: string): string => id,
 
-        name: (id: string): Promise<string> => loadModelProperty<ProductModel, string>(id, NAME, loadProduct),
+        name: (id: string): Promise<string> => loadModelProperty(id, NAME, loadProduct),
     },
 };
